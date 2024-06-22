@@ -1,0 +1,100 @@
+## [704.二分查找](https://leetcode.com/problems/binary-search/)
+**数组基础**：数组下标都是从0开始的。数组内存空间的地址是连续的。
+我们在删除或者增添元素的时候，就难免要移动其他元素的地址。
+
+Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search target in nums. If target exists, then return its `index`. Otherwise, return -1.
+
+**Time complexity**: O(logn)  
+**Space complexity**: O(1)
+
+**左闭右闭** ：定义target在[left, right]区间
+
+`while (left <= right)` 要使用 <= ，因为left == right是有意义的  
+`if (nums[middle] > target)`  
+right 要赋值为 `middle - 1`，因为当前这个nums[middle]一定不是target，那么接下来要查找的左区间结束下标位置就是 `middle - 1`
+
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                right = mid - 1
+            elif nums[mid] < target:
+                left = mid + 1
+        return -1
+```
+
+## [34.Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
+Given an array of integers `nums` sorted in non-decreasing order, find the `starting and ending` position of a given target value.
+
+If target is not found in the array, return [-1, -1].
+
+You must write an algorithm with `O(log n)` runtime complexity.
+```python
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        res = [-1, -1]  # 初始化结果为 [-1, -1]，表示未找到目标值
+        res[0] = self.findBound(nums, target, True)  # 查找目标值的起始位置
+        if res[0] == -1:
+            return res  # 如果起始位置为 -1，返回 [-1, -1]
+        res[1] = self.findBound(nums, target, False)  # 查找目标值的结束位置
+        return res
+    
+    def findBound(self, nums: List[int], target: int, isFirst: bool) -> int:
+        left, right = 0, len(nums) - 1
+        res = -1
+        while left <= right:
+            mid = left + (right - left) // 2
+            if nums[mid] > target:
+                right = mid - 1
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                res = mid
+                if isFirst:
+                    right = mid - 1  # 继续在左侧搜索，找到第一个出现位置
+                else:
+                    left = mid + 1  # 继续在右侧搜索，找到最后一个出现位置
+        return res
+```
+## [27.移除元素](https://leetcode.com/problems/remove-element/description/)
+`左右指针`  
+time complexity: O(n)  
+space complexity: O(1)
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            if nums[left] != val:
+                left += 1
+            else:
+                self.swap(nums, left, right)
+                right -= 1 
+        
+        return left
+    
+    def swap(self, nums:List[int], a: int, b: int):
+        tmp = nums[a]
+        nums[a] = nums[b]
+        nums[b] = tmp
+```
+
+`快慢指针`  
+通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。
+
+**定义快慢指针**  
+快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组  
+慢指针：指向更新 新数组下标的位置
+```python
+def removeElement(self, nums: List[int], val: int) -> int:
+        slow = 0
+        for i in (range(len(nums))):
+            if nums[i] != val:
+                nums[slow] = nums[i]
+                slow += 1
+        return slow
