@@ -9,7 +9,7 @@
 8. For alphabet
 'A'.isdigit()
 'A'.isalpha()
-9. ord() askii code
+9. ord() askii *code ord(c) - ord('a')*
 10. 
 ```python
 string_builder = []
@@ -22,7 +22,9 @@ return "".join(string_builder)
 
 ## Dict
 ```
+hashmap = dict()
 dict.get('b', 0) 如果'b'在dict中为key return value的值 否则return 0
+if a in dict
 dict1 == dict2
 for key in dict1
 dict.pop('a') same as `del dict('a')`
@@ -56,6 +58,7 @@ def myFunc(e):
   return len(e)
 cars = ['Ford', 'Mitsubishi', 'BMW', 'VW']
 cars.sort(key=myFunc)
+cars.sort(lambda e: len(e))
 ```
 
 ## queue
@@ -64,3 +67,11 @@ queue = deque()
 append()/appendleft()  
 pop()/popleft()  
 queue[0] / queue[-1]
+
+## priorityqueue
+heappush(hp, value)
+heappop(hp)
+
+*maxHeap*
+heappush_max(hp, value)
+heappop_max(hp)
