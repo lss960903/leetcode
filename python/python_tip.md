@@ -3,7 +3,7 @@
 2. max: float('inf'), 
 3. ans = [float('inf')]*len(nums)
 4. 平方: nums[i] ** 2
-5. 初始化矩阵: `grid = [[0] * n for _ in range(n)]`
+5. 初始化矩阵: `grid = [[0] * n for _ in range(n)]` `[[0 for _ in range(cols)] for _ in range(rows)]`
 6. coner case: if not t or not s: return ""
 7. divmod(num, 10) - return tuple(quotient , remainder)
 8. For alphabet
@@ -58,7 +58,8 @@ def myFunc(e):
   return len(e)
 cars = ['Ford', 'Mitsubishi', 'BMW', 'VW']
 cars.sort(key=myFunc)
-cars.sort(lambda e: len(e))
+cars.sort(key = lambda e: len(e))
+intervals.sort(key= lambda x: x[0])
 ```
 
 ## queue
@@ -71,7 +72,8 @@ queue[0] / queue[-1]
 ## priorityqueue
 heappush(hp, value)
 heappop(hp)
+peek = hp[0]
 
 *maxHeap*
-heappush_max(hp, value)
-heappop_max(hp)
+heappush(hp, -value)
+-1 * heappop(hp)
